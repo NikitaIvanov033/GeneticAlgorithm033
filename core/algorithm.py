@@ -37,7 +37,7 @@ class GeneticAlgorithm:
         self.population: List[T] = []
         self.fitness: List[float | int] = []
         self.best_individual: Optional[T] = None
-        self.best_fitness: float | int = -float('inf')
+        self.best_fitness: float | int = float('inf')
         self.generation: int = 0
         self.history: List[float | int] = []
 
@@ -51,10 +51,10 @@ class GeneticAlgorithm:
         if not fitness:
             return
 
-        best_idx = max(range(len(fitness)), key=lambda individual: fitness[individual])
+        best_idx = min(range(len(fitness)), key=lambda individual: fitness[individual])
         current_best_fitness = fitness[best_idx]
 
-        if current_best_fitness > self.best_fitness:
+        if current_best_fitness < self.best_fitness:
             self.best_fitness = current_best_fitness
             self.best_individual = population[best_idx].copy()
 
