@@ -47,19 +47,32 @@ class GeneticAlgorithm:
     def _evaluate_population(self, population: List[T]) -> List[float | int]:
         return [self.fitness_fn(individual) for individual in population]
 
+    def _find_best_index(self, fitness: List[float | int]) -> int:
+        """Find index of individual with minimum fitness."""
+        best_idx = 0
+        for i in range(1, len(fitness)):
+            if fitness[i] < fitness[best_idx]:
+                best_idx = i
+        return best_idx
+
     def _update_best(self, population: List[T], fitness: List[float | int]) -> None:
+        """Find index of individual with minimum fitness."""
         if not fitness:
             return
 
-        best_idx = min(range(len(fitness)), key=lambda individual: fitness[individual])
+        best_idx = self._find_best_index(fitness)
         current_best_fitness = fitness[best_idx]
 
         if current_best_fitness < self.best_fitness:
             self.best_fitness = current_best_fitness
             self.best_individual = population[best_idx].copy()
 
+    def _add_to_history(self) -> None:
+        """Add current best fitness to history."""
+        self.history.append(self.best_fitness)
+
     def _log_generation(self) -> None:
-        if self.callback is not None:
+        if self.callback:
             self.callback(
                 self.generation,
                 self.population,
@@ -75,7 +88,7 @@ class GeneticAlgorithm:
         self.population = self._initialize_population()
         self.fitness = self._evaluate_population(self.population)
         self._update_best(self.population, self.fitness)
-        self.history.append(self.best_fitness)
+        self._add_to_history()
         self._log_generation()
 
         for gen in range(self.config.max_generations):
@@ -94,8 +107,7 @@ class GeneticAlgorithm:
             )
 
             self._update_best(self.population, self.fitness)
-            self.history.append(self.best_fitness)
-
+            self._add_to_history()
             self._log_generation()
 
         return self.best_individual, self.best_fitness
