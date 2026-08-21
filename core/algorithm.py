@@ -23,7 +23,7 @@ class GeneticAlgorithm:
             mutation: MutationOperator[T],
             replacement: ReplacementOperator[T],
             initializer: Initializer[T],
-            callback: Optional[Callable[[int, List[T], List[float], float], None]] = None
+            callback: Optional[Callable[[int, List[T], List[float | int], float | int], None]] = None
     ):
         self.config = config
         self.fitness_fn = fitness_fn
@@ -35,11 +35,11 @@ class GeneticAlgorithm:
         self.callback = callback
 
         self.population: List[T] = []
-        self.fitness: List[float] = []
+        self.fitness: List[float | int] = []
         self.best_individual: Optional[T] = None
-        self.best_fitness: float = -float('inf')
+        self.best_fitness: float | int = -float('inf')
         self.generation: int = 0
-        self.history: List[float] = []
+        self.history: List[float | int] = []
 
     def _initialize_population(self) -> List[T]:
         return [self.initializer() for _ in range(self.config.population_size)]
@@ -67,7 +67,7 @@ class GeneticAlgorithm:
                 self.best_fitness
             )
 
-    def run(self) -> Tuple[Optional[T], float]:
+    def run(self) -> Tuple[Optional[T], float | int]:
         """
         Returns:
             Tuple[Optional[T], float]: best individual and best fitness
@@ -100,5 +100,5 @@ class GeneticAlgorithm:
 
         return self.best_individual, self.best_fitness
 
-    def get_history(self) -> List[float]:
+    def get_history(self) -> List[float | int]:
         return self.history.copy()
