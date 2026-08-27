@@ -2,30 +2,14 @@ from typing import List
 import random
 from core.config import GAConfig
 from individuals.permutation import PermutationIndividual
+from .base import pair_wise_crossover
 
 
 def pmx_crossover(
         parents: List[PermutationIndividual],
         config: GAConfig
 ) -> List[PermutationIndividual]:
-    offspring = []
-    pop_size = len(parents)
-
-    for i in range(0, pop_size, 2):
-        if i + 1 >= pop_size:
-            offspring.append(parents[i].copy())
-            break
-
-        p1 = parents[i]
-        p2 = parents[i + 1]
-
-        if random.random() < config.crossover_rate:
-            child1, child2 = _pmx(p1, p2)
-            offspring.extend([child1, child2])
-        else:
-            offspring.extend([p1.copy(), p2.copy()])
-
-    return offspring
+    return pair_wise_crossover(parents, config, _pmx)
 
 
 def _pmx(
