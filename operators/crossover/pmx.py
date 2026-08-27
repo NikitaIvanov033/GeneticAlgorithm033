@@ -8,7 +8,6 @@ def pmx_crossover(
         parents: List[PermutationIndividual],
         config: GAConfig
 ) -> List[PermutationIndividual]:
-
     offspring = []
     pop_size = len(parents)
 
