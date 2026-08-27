@@ -16,7 +16,8 @@ def tournament_selection(
     tournament_size = config.tournament_size
 
     for _ in range(pop_size):
-        participants = random.sample(list(zip(population, fitness)), tournament_size)
+        indices = random.sample(range(pop_size), tournament_size)
+        participants = [(population[i], fitness[i]) for i in indices]
 
         winner = min(participants, key=itemgetter(1))[0]
 
