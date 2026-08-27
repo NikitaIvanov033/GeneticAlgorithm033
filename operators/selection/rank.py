@@ -23,9 +23,7 @@ def rank_selection(
     total_rank = sum(ranks)
     probabilities = [r / total_rank for r in ranks]
 
-    selected = []
-    for _ in range(pop_size):
-        idx = random.choices(range(pop_size), weights=probabilities, k=1)[0]
-        selected.append(sorted_pairs[idx][0].copy())
+    indices = random.choices(range(pop_size), weights=probabilities, k=pop_size)
+    selected = [sorted_pairs[idx][0].copy() for idx in indices]
 
     return selected
