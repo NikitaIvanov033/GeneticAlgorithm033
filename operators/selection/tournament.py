@@ -6,21 +6,23 @@ from operator import itemgetter
 T = TypeVar('T')
 
 
-def tournament_selection(
-        population: List[T],
-        fitness: List[float | int],
-        config: GAConfig
-) -> List[T]:
-    selected: List[T] = []
-    pop_size = config.population_size
-    tournament_size = config.tournament_size
+def create_tournament_selection(tournament_size: int = 3):
+    def tournament_selection(
+            population: List[T],
+            fitness: List[float | int],
+            config: GAConfig
+    ) -> List[T]:
+        selected: List[T] = []
+        pop_size = config.population_size
 
-    for _ in range(pop_size):
-        indices = random.sample(range(pop_size), tournament_size)
-        participants = [(population[i], fitness[i]) for i in indices]
+        for _ in range(pop_size):
+            indices = random.sample(range(pop_size), tournament_size)
+            participants = [(population[i], fitness[i]) for i in indices]
 
-        winner = min(participants, key=itemgetter(1))[0]
+            winner = min(participants, key=itemgetter(1))[0]
 
-        selected.append(winner.copy())
+            selected.append(winner.copy())
 
-    return selected
+        return selected
+
+    return tournament_selection
