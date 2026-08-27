@@ -1,4 +1,4 @@
-from typing import Protocol, TypeVar, Tuple
+from typing import Protocol, TypeVar
 
 T = TypeVar('T', bound='Individual', covariant=True)
 
@@ -6,12 +6,6 @@ T = TypeVar('T', bound='Individual', covariant=True)
 class Individual(Protocol):
 
     def copy(self: T) -> T:
-        ...
-
-    def mutate(self, rate: float) -> None:
-        ...
-
-    def crossover(self: T, other: T) -> Tuple[T, T]:
         ...
 
     def __len__(self) -> int:
