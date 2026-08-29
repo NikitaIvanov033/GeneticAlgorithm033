@@ -1,13 +1,11 @@
 import csv
 import time
 import random
-import signal
-import sys
 from pathlib import Path
 from datetime import datetime
 from itertools import product
 from dataclasses import dataclass, asdict
-from typing import List, Dict, Any, Set
+from typing import List, Dict, Any
 
 import numpy as np
 from core.config import GAConfig
@@ -23,7 +21,7 @@ from operators.replacement.generational import generational_replacement
 from operators.selection.tournament import create_tournament_selection
 from operators.selection.rank import rank_selection
 from utils.data_loader import load_tsp_data
-
+from tqdm import tqdm
 
 @dataclass
 class BenchmarkConfig:
@@ -186,7 +184,7 @@ def run_benchmark(
 
                 run_counter = 0
 
-                for config_kwargs in combinations:
+                for config_kwargs in tqdm(combinations, desc="Configurations"):
                     base_config = {
                         'selection': config_kwargs['selection'],
                         'crossover': config_kwargs['crossover'],
@@ -202,7 +200,7 @@ def run_benchmark(
                     print(f"\n  Config: {config_kwargs['selection']} + {config_kwargs['crossover']} + {config_kwargs['replacement']} | "
                           f"mut={config_kwargs['mutation_rate']} | ts={config_kwargs['tournament_size']}")
 
-                    for run_id in range(n_runs):
+                    for run_id in tqdm(range(n_runs), desc=f"  Runs for {config_kwargs['selection']}"):
                         run_counter += 1
                         seed = 42 + run_counter
 

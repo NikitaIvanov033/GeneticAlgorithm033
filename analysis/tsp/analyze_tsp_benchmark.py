@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from utils import select_csv_files
+from tqdm import tqdm
 
 BASE_DIR = Path(__file__).parent.parent
 RESULTS_DIR = BASE_DIR / "data" / "results"
@@ -19,7 +20,7 @@ def load_selected_files(files: list) -> pd.DataFrame:
 
     print(f"\nLoading {len(files)} file(s)...")
     dfs = []
-    for f in files:
+    for f in tqdm(files, desc="Loading files"):
         df = pd.read_csv(f)
         dfs.append(df)
         print(f"  {Path(f).name}: {len(df)} rows")
