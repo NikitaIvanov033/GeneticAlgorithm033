@@ -1,6 +1,23 @@
+"""
+Utility functions and shared resources.
+
+Available:
+- select_files, select_csv_files: GUI file selectors
+- load_tsp_data: TSP data loader
+- Paths: BASE_DIR, DATA_DIR, RESULTS_DIR, etc.
+"""
+
 from .gui import select_files, select_csv_files
 from .data_loader import load_tsp_data
-from .paths import BASE_DIR, DATA_DIR, RESULTS_DIR, ANALYSIS_DIR, TSP_DATA_DIR, EXPERIMENTS_DIR, BENCHMARK_DIR
+from .paths import (
+    BASE_DIR,
+    DATA_DIR,
+    RESULTS_DIR,
+    ANALYSIS_DIR,
+    TSP_DATA_DIR,
+    EXPERIMENTS_DIR,
+    BENCHMARK_DIR
+)
 
 __all__ = [
     'select_files',
