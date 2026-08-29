@@ -21,6 +21,7 @@ from operators.replacement.generational import generational_replacement
 from operators.selection.tournament import create_tournament_selection
 from operators.selection.rank import rank_selection
 from utils.data_loader import load_tsp_data
+from utils.paths import BASE_DIR, DATA_DIR, RESULTS_DIR, TSP_DATA_DIR
 from tqdm import tqdm
 
 @dataclass
@@ -221,11 +222,6 @@ def run_benchmark(
 
             print(f"\nResults saved to: {csv_path}")
 
-
-BASE_DIR = Path(__file__).parent.parent.parent
-DATA_PATH = str(BASE_DIR / "data" / "tsp" / "berlin52.tsp")
-RESULTS_DIR = str(BASE_DIR / "data" / "results")
-
 def main():
     param_grid = {
         'selection': ['tournament', 'rank'],
@@ -242,7 +238,7 @@ def main():
         base_params=param_grid,
         tournament_sizes=[3, 5, 10],
         n_runs=50,
-        data_path=DATA_PATH,
+        data_path=str(TSP_DATA_DIR / "berlin52.tsp"),
         results_dir=RESULTS_DIR,
         prefix="benchmark",
     )

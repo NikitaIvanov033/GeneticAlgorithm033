@@ -8,8 +8,9 @@ from operators.mutation.swap import swap_mutation
 from operators.replacement.generational import generational_replacement
 from operators.selection.tournament import create_tournament_selection
 from utils.data_loader import load_tsp_data
+from utils.paths import TSP_DATA_DIR
 
-cities = load_tsp_data("../data/tsp/berlin52.tsp")
+cities = load_tsp_data(str(TSP_DATA_DIR / "berlin52.tsp"))
 n_cities = len(cities)
 distance_matrix = compute_euclidean_distance_matrix(cities)
 
@@ -18,10 +19,9 @@ fitness_fn = create_tsp_fitness(distance_matrix)
 
 config = GAConfig(
     population_size=100,
-    max_generations=300,
+    max_generations=3000,
     mutation_rate=0.2,
-    crossover_rate=0.9,
-    seed=42
+    crossover_rate=0.9
 )
 
 ga = GeneticAlgorithm(

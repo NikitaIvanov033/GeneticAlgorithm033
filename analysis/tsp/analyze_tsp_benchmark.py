@@ -3,10 +3,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from utils import select_csv_files
+from utils.paths import BASE_DIR, RESULTS_DIR
 from tqdm import tqdm
-
-BASE_DIR = Path(__file__).parent.parent
-RESULTS_DIR = BASE_DIR / "data" / "results"
 
 OPTIMAL = 7542.0
 
